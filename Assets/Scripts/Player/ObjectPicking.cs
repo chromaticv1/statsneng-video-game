@@ -17,6 +17,9 @@ public class ObjectPicking : MonoBehaviour
     float originalDistance;             // The original distance between the player camera and the target
     float originalScale;                // The original scale of the target objects prior to being resized
     Vector3 targetScale;                // The scale we want our object to be set to each frame
+    public float dPercentage;
+    public float ptSpeed;
+    Vector3 sex;
 
     public static event Action<bool, string> layerChanger; //STUFF
  
@@ -30,6 +33,14 @@ public class ObjectPicking : MonoBehaviour
     {
         HandleInput();
         ResizeTarget();
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0f) {
+            dPercentage++;
+        } else if (Input.GetAxis("Mouse ScrollWheel") < 0f) {
+            dPercentage--;
+        }
+
+        dPercentage = Mathf.Clamp(dPercentage,30,100);
     }
  
     void HandleInput()
@@ -95,8 +106,9 @@ public class ObjectPicking : MonoBehaviour
             // depending on the scale and offset factor
            // target.position = hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward; //* grabbedObject.GetComponent<SphereCollider>().radius; 
             // Calculate the current distance between the camera and the target object
-            if(!whiling)target.position = hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward;
-
+            // if(!whiling)target.position = hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward;
+            sex=Vector3.Lerp(transform.position,hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward,dPercentage/100);
+            target.position=Vector3.Slerp(target.position,sex,ptSpeed*Time.deltaTime);
             while (Input.GetKey(KeyCode.Q) && Physics.OverlapBox(target.position, new Vector3(target.GetComponent<SphereCollider>().radius, target.GetComponent<SphereCollider>().radius, target.GetComponent<SphereCollider>().radius), Quaternion.identity).Length > 0) {
                 whiling=true;
                 target.position -= transform.forward*.1f;
