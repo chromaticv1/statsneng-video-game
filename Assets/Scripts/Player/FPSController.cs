@@ -10,11 +10,15 @@ public float mouseSensitivity;
 private float mouseYvalue;
 public float movementSpeed;
 Vector3 movementInput;
+Vector3 velocity;
+public float jumpHeight;
+public float gravity;
+public float thiccness;
 public Transform cameratransform;
 public GameObject coob;
 bool isMoving;
 bool isGrounded;
-LayerMask groundingLayerMask;
+public LayerMask groundingLayerMask;
     void Awake()
     {
 
@@ -22,7 +26,6 @@ LayerMask groundingLayerMask;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        groundingLayerMask = LayerMask.NameToLayer("Default");
         
     }
     void Update()
@@ -30,6 +33,7 @@ LayerMask groundingLayerMask;
         MousingMoment();
         PlanarMovementChecking();
         GroundChecker();
+        GravityAndOthers();
 
         if (isMoving) MovementMain();
     }
@@ -47,6 +51,16 @@ LayerMask groundingLayerMask;
     void MovementMain(){
         controller.Move(movementSpeed*Time.deltaTime*movementInput.normalized);
     }
+    void GravityAndOthers(){
+        if(!isGrounded){
+            velocity.y+=gravity*Time.deltaTime;}
+        else if(isGrounded &&velocity.y>0){
+            return;
+        }
+        else{velocity.y=0;}
+        if(Input.GetKeyDown(KeyCode.Space)&&isGrounded){velocity.y=Mathf.Sqrt(2*-gravity*jumpHeight);}
+        controller.Move(velocity*Time.deltaTime);
+    }
     void MousingMoment(){
         float mouseX=Input.GetAxisRaw("Mouse X")*mouseSensitivity*100f*Time.deltaTime;
         float mouseY=Input.GetAxisRaw("Mouse Y")*mouseSensitivity*100f*Time.deltaTime;
@@ -56,7 +70,17 @@ LayerMask groundingLayerMask;
         cameratransform.localRotation=Quaternion.Euler(mouseYvalue,cameratransform.localRotation.y,transform.localRotation.z);
     }
     void GroundChecker(){
-        if(Physics.Raycast(transform.position,Vector3.down,.55f)){Debug.DrawLine(transform.position,transform.position+Vector3.down*.55f,Color.blue);}
+        Ray ray1 = new Ray (transform.position+thiccness*(transform.forward+transform.right),Vector3.down);
+        Ray ray2 = new Ray (transform.position+thiccness*(transform.forward-transform.right),Vector3.down);
+        Ray ray3 = new Ray (transform.position+thiccness*(-transform.forward+transform.right),Vector3.down);
+        Ray ray4 = new Ray (transform.position+thiccness*(-transform.forward-transform.right),Vector3.down);
+
+        if(Physics.Raycast(ray1,1.09f,groundingLayerMask)||Physics.Raycast(ray2,1.09f,groundingLayerMask)||Physics.Raycast(ray3,1.09f,groundingLayerMask)||Physics.Raycast(ray4,1.09f,groundingLayerMask)){
+            isGrounded=true;
+        }
+        else{isGrounded=false;}
+        print(isGrounded);
+    
     }
 
 }
