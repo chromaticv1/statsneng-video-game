@@ -19,6 +19,7 @@ public class ObjectPicking : MonoBehaviour
     Vector3 targetScale;                // The scale we want our object to be set to each frame
     public float dPercentage;
     public float ptSpeed;
+    public float minmiumDistance;
     Vector3 sex;
 
     public static event Action<bool, string> layerChanger; //STUFF
@@ -40,7 +41,7 @@ public class ObjectPicking : MonoBehaviour
             dPercentage--;
         }
 
-        dPercentage = Mathf.Clamp(dPercentage,30,100);
+        dPercentage = Mathf.Clamp(dPercentage,6,20);
     }
  
     void HandleInput()
@@ -107,7 +108,7 @@ public class ObjectPicking : MonoBehaviour
            // target.position = hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward; //* grabbedObject.GetComponent<SphereCollider>().radius; 
             // Calculate the current distance between the camera and the target object
             // if(!whiling)target.position = hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward;
-            sex=Vector3.Lerp(transform.position,hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward,dPercentage/100);
+            sex=Vector3.Lerp(transform.position,hit.point - transform.forward * offsetFactor * targetScale.x - transform.forward,dPercentage/20);
             target.position=Vector3.Slerp(target.position,sex,ptSpeed*Time.deltaTime);
             while (Input.GetKey(KeyCode.Q) && Physics.OverlapBox(target.position, new Vector3(target.GetComponent<SphereCollider>().radius, target.GetComponent<SphereCollider>().radius, target.GetComponent<SphereCollider>().radius), Quaternion.identity).Length > 0) {
                 whiling=true;

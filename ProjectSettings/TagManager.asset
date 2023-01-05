@@ -6,6 +6,8 @@ TagManager:
   tags:
   - MostPlaces
   - CinemachineTarget
+  - Pickable
+  - Picked
   layers:
   - Default
   - TransparentFX
