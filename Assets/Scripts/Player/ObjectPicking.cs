@@ -33,7 +33,9 @@ public class ObjectPicking : MonoBehaviour
     void Update()
     {
         HandleInput();
-        ResizeTarget();
+        if (target) {
+            if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(target.position.x, 0, target.position.z)).magnitude>=minmiumDistance) ResizeTarget();
+        }
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0f) {
             dPercentage++;
