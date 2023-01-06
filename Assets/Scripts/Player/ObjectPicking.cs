@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections;
 using UnityEngine;
  
 public class ObjectPicking : MonoBehaviour
@@ -21,6 +21,8 @@ public class ObjectPicking : MonoBehaviour
     public float ptSpeed;
     public float minmiumDistance;
     Vector3 sex;
+    Vector3 previousTargetPosition;
+    public float blinkDistance;
 
     public static event Action<bool, string> layerChanger; //STUFF
  
@@ -43,7 +45,7 @@ public class ObjectPicking : MonoBehaviour
             dPercentage--;
         }
 
-        dPercentage = Mathf.Clamp(dPercentage,6,20);
+        dPercentage = Mathf.Clamp(dPercentage,2,18);
     }
  
     void HandleInput()
@@ -77,11 +79,14 @@ public class ObjectPicking : MonoBehaviour
  
                     // Set our target scale to be the same as the original for the time being
                     targetScale = target.localScale;
+                    previousTargetPosition = target.transform.position;
+                    StartCoroutine(ResetDP());
                 }
             }
             // If we DO have a target
             else
             {
+                StopAllCoroutines();
                 //STUFF
                 layerChanger?.Invoke(false, target.name);
                 ///STUFF
@@ -131,6 +136,15 @@ public class ObjectPicking : MonoBehaviour
  
             // Set the scale for the target objectm, multiplied by the original scale
             target.localScale = targetScale * originalScale;
+        }
+    }
+    IEnumerator ResetDP(){
+        while(true){
+            if(target && (previousTargetPosition-target.position).magnitude <= blinkDistance){
+                dPercentage= 18;
+                previousTargetPosition=target.position;
+            }
+            yield return new WaitForSeconds(.1f);
         }
     }
 }

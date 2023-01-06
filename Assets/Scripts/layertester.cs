@@ -6,7 +6,7 @@ public class layertester : MonoBehaviour
 {
     [SerializeField] GameObject impostor;
     [SerializeField] LayerMask groundLayer;
-    public GameObject sexXy;
+    public GameObject tracker;
     bool susBool;
     string activeObjectName;
     // Start is called before the first frame update
@@ -24,7 +24,7 @@ public class layertester : MonoBehaviour
             Ray ray = new Ray(transform.position, Vector3.down);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit,Mathf.Infinity, groundLayer) && activeObjectName.Equals(gameObject.name)) {
-                GameObject g = (GameObject)Instantiate(sexXy, hit.point, Quaternion.identity);
+                GameObject g = (GameObject)Instantiate(tracker, hit.point, Quaternion.identity, this.transform);
                 print("isworking bro u stupid");
                 Destroy(g,0.02f);
             }
