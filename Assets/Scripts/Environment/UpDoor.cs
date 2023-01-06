@@ -8,6 +8,11 @@ public class UpDoor : MonoBehaviour
     public float height;
     Toggler toggler;
     bool isWorking;
+    
+    public AudioClip clip1;
+    public AudioClip clip2;
+    AudioSource source;
+    
 
     float oldY;
 
@@ -15,6 +20,7 @@ public class UpDoor : MonoBehaviour
         toggler = this.GetComponent<Toggler>();
         Toggler.triggered += Toggle;
         oldY = transform.position.y;
+        source = this.GetComponent<AudioSource>();
     }
 
     void Toggle(bool t_, string s_) {
@@ -24,9 +30,13 @@ public class UpDoor : MonoBehaviour
         if (t_) {
             StopAllCoroutines();
             StartCoroutine(DoorUpAnimation());
+            if(source.isPlaying){source.Stop();}
+            source.PlayOneShot(clip1);
         } else if (!t_) {
             StopAllCoroutines();
             StartCoroutine(DoorDownAnimation());
+            if(source.isPlaying){source.Stop();}
+            source.PlayOneShot(clip2);
         }
     }
 
