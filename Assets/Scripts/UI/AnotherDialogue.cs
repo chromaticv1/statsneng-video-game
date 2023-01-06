@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System;
 
 public class AnotherDialogue : MonoBehaviour
 {
@@ -12,8 +13,18 @@ public class AnotherDialogue : MonoBehaviour
     public int currentDialogue;
     public DialogueChain[] dialogueChains;
 
+    public EnemyDialogue eDialogue;
+
+    public static event Action<int> toastPing;
+
     private void Update() {
         if(Input.GetKeyDown(KeyCode.F)) {
+            if (currentDialogue > dialogueChains.Length-1) {
+                eDialogue.DToggler(false);
+                toastPing?.Invoke(0);
+                Destroy(gameObject);
+                return;
+            }
             UpdateDialogue(currentDialogue);
             currentDialogue++;
         }

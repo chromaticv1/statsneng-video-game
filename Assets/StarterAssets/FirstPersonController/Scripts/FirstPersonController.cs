@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
@@ -74,6 +75,8 @@ namespace StarterAssets
 
 		private const float _threshold = 0.01f;
 
+		public bool isDialoguing = false;
+
 		private bool IsCurrentDeviceMouse
 		{
 			get
@@ -108,13 +111,21 @@ namespace StarterAssets
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
+			EnemyDialogue.dialogueTrigger += DialogueMovementToggler;
 		}
 
-		private void Update()
+        private void DialogueMovementToggler(bool b_)
+        {
+            isDialoguing = b_;
+        }
+
+        private void Update()
 		{
-			JumpAndGravity();
 			GroundedCheck();
-			Move();
+			if (!isDialoguing) {
+				JumpAndGravity();
+				Move();
+			}
 		}
 
 		private void LateUpdate()

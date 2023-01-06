@@ -25,6 +25,13 @@ public class ObjectPicking : MonoBehaviour
     public float blinkDistance;
 
     public static event Action<bool, string> layerChanger; //STUFF
+
+    //For TUTORIAL
+    public bool isFirstTime = true;
+    public static event Action<int> pickedCube;
+
+    ///For TUTORIAL
+
  
     void Start()
     {
@@ -63,6 +70,10 @@ public class ObjectPicking : MonoBehaviour
 
                     // Set our target variable to be the Transform object we hit with our raycast
                     target = hit.transform;
+
+                    //Tutorial
+                    if (isFirstTime) pickedCube?.Invoke(1);
+                    ///Tutorial
  
                     //STUFF
                     layerChanger?.Invoke(true, target.name);
@@ -90,6 +101,13 @@ public class ObjectPicking : MonoBehaviour
                 //STUFF
                 layerChanger?.Invoke(false, target.name);
                 ///STUFF
+
+                //Tutorial
+                if (isFirstTime) {
+                    pickedCube?.Invoke(2);
+                    isFirstTime = false;
+                }
+                ///Tutorial
 
                 // Reactivate physics for the target object
                 target.GetComponent<Rigidbody>().isKinematic = false;
