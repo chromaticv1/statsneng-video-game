@@ -16,7 +16,9 @@ public class PushButton : MonoBehaviour
     bool isPressed = false;
     public AudioClip clip1;
     public AudioClip clip2;
+    bool isAlreadyOn = false;
     AudioSource source;
+    int triggerCounter = 0;
 
     private void Start() {
         dipDistance = transform.localScale.y * 0.085f;
@@ -24,20 +26,27 @@ public class PushButton : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-        if ((other.CompareTag("Player") || other.CompareTag("Pickable") || other.CompareTag("Picked")) && !isPressed) {
+        print("BRUH");
+        if ((other.CompareTag("Player") || other.CompareTag("Pickable") || other.CompareTag("Picked"))) {//&& !isPressed) {
+            triggerCounter++;
             isPressed = true;
-            button.position = new Vector3 (button.position.x, button.position.y - Mathf.Abs(dipDistance), button.position.z);
-            toggler.ToggleTrigger(true);
-            source.PlayOneShot(clip1);
+            if (triggerCounter == 1) {
+                button.position = new Vector3 (button.position.x, button.position.y - Mathf.Abs(dipDistance), button.position.z);
+                toggler.ToggleTrigger(true);
+                source.PlayOneShot(clip1);
+            }
         }
     }
 
     void OnTriggerExit(Collider other) {
-        if ((other.CompareTag("Player") || other.CompareTag("Pickable") || other.CompareTag("Picked")) && isPressed) {            
-            isPressed = false;
-            button.position = new Vector3 (button.position.x, button.position.y + Mathf.Abs(dipDistance), button.position.z);
-            toggler.ToggleTrigger(false);
-            source.PlayOneShot(clip2);
+        if ((other.CompareTag("Player") || other.CompareTag("Pickable") || other.CompareTag("Picked")) && triggerCounter > 0) {//&& isPressed) {            
+            triggerCounter--;
+            if(triggerCounter == 0) {
+                button.position = new Vector3 (button.position.x, button.position.y + Mathf.Abs(dipDistance), button.position.z);
+                isPressed = false;
+                toggler.ToggleTrigger(false);
+                source.PlayOneShot(clip2);
+            }
         }
     }
 }

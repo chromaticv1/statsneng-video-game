@@ -91,7 +91,8 @@ public class ObjectPicking : MonoBehaviour
                     // Set our target scale to be the same as the original for the time being
                     targetScale = target.localScale;
                     previousTargetPosition = target.transform.position;
-                    StartCoroutine(ResetDP());
+                    dPercentage= 19;
+                    // StartCoroutine(ResetDP());
                 }
             }
             // If we DO have a target

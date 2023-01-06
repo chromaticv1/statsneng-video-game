@@ -13,6 +13,7 @@ public class SendToast : MonoBehaviour
    }
 
    void PushToast(int tCount_) {
+    if (!canvas) return;
     canvas.SetActive(true);
     UpdateCanvas(tCount_);
    }
