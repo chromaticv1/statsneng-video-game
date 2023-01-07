@@ -20,6 +20,7 @@ public class EnemyDialogue : MonoBehaviour
             Destroy(bCollider);
         }
         //GameObject i = (GameObject)Instantiate(dialogueUI, transform.position, Quaternion.identity);
+        if (!dUI) return;
         dUI.SetActive(true);
         dUI.GetComponent<AnotherDialogue>().eDialogue = this;
         DToggler(true);

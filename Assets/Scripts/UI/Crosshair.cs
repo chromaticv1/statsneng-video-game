@@ -16,6 +16,7 @@ public class Crosshair : MonoBehaviour
     }
 
     void UpdateCrosshair(int i_) {
+        if (!crosshairImage) return;
         if (i_ == 2) {
             crosshairImage.sprite = grabbedSprite;
             crosshairImage.rectTransform.sizeDelta = new Vector2(32, 32);

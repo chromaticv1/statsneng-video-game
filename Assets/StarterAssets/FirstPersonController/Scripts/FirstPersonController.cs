@@ -112,6 +112,7 @@ namespace StarterAssets
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
 			EnemyDialogue.dialogueTrigger += DialogueMovementToggler;
+			PauseMenu.isPauseMenuActive += DialogueMovementToggler;
 		}
 
         private void DialogueMovementToggler(bool b_)
@@ -130,6 +131,7 @@ namespace StarterAssets
 
 		private void LateUpdate()
 		{
+			if (isDialoguing) return;
 			CameraRotation();
 		}
 

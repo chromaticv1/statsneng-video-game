@@ -35,18 +35,25 @@ public class ObjectPicking : MonoBehaviour
 
 
     public bool isPicked;
+    public bool isPaused;
 
     ///For TUTORIAL
 
  
     void Start()
     {
-        // Cursor.visible = false;
-        // Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState=CursorLockMode.Locked;
+        Cursor.visible=false;
+        PauseMenu.isPauseMenuActive += UpdatePauseMenu;
+    }
+
+    void UpdatePauseMenu(bool b_) {
+        isPaused = b_;
     }
  
     void Update()
     {
+        if (isPaused) return;
         HandleInput();
         if (target) {
             if((new Vector3(transform.position.x, 0, transform.position.z) - new Vector3(target.position.x, 0, target.position.z)).magnitude>=minmiumDistance) ResizeTarget();
@@ -62,6 +69,7 @@ public class ObjectPicking : MonoBehaviour
     }
 
     private void FixedUpdate() {
+        if (isPaused) return;
         if (isPicked) return;
         RaycastHit hitler;
         if (Physics.Raycast(transform.position, transform.forward, out hitler, Mathf.Infinity, everythingExceptBullshitMask)) { 
