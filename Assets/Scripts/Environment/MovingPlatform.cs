@@ -15,6 +15,13 @@ public class MovingPlatform : MonoBehaviour
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
+        ObjectPicking.mPlatformPing += Sex;
+        Sex(gameObject.name);
+    }
+
+    private void Sex(string name_)
+    {
+        if (name_ != gameObject.name) return;
         switch (direction) {
             case "up":
                 distance = transform.position.y;
@@ -34,6 +41,7 @@ public class MovingPlatform : MonoBehaviour
             default:
             return;
          }
+         time = 0;
     }
 
     void Update()
@@ -42,13 +50,13 @@ public class MovingPlatform : MonoBehaviour
         time += Time.deltaTime;
          switch (direction) {
             case "up":
-                transform.position = new Vector3(transform.position.x, distance + MathF.Sin(time*dipSpeed) * buffer, transform.position.z);
+                transform.position = new Vector3(transform.position.x, distance +Mathf.Sin(time*dipSpeed) * buffer, transform.position.z);
                 break;
             case "fwd":
-                transform.position = new Vector3(transform.position.x , transform.position.y, distance + MathF.Sin(time*dipSpeed) * buffer);
+                transform.position = new Vector3(transform.position.x , transform.position.y, distance +Mathf.Sin(time*dipSpeed) * buffer);
                 break;
             case "left":
-                transform.position = new Vector3(distance + MathF.Sin(time*dipSpeed) * buffer , transform.position.y, transform.position.z);
+                transform.position = new Vector3(distance +Mathf.Sin(time*dipSpeed) * buffer , transform.position.y, transform.position.z);
                 break;
             default:
             return;

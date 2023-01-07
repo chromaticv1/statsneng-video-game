@@ -26,6 +26,7 @@ public class ObjectPicking : MonoBehaviour
 
     public static event Action<bool, string> layerChanger; //STUFF
     public static event Action<int> crosshairUpdater; //Cursor
+    public static event Action<string> mPlatformPing; //Mplatform
 
     //For TUTORIAL
     public bool isFirstTime = true;
@@ -129,6 +130,7 @@ public class ObjectPicking : MonoBehaviour
                 //STUFF
                 layerChanger?.Invoke(false, target.name);
                 crosshairUpdater?.Invoke(0);
+                mPlatformPing?.Invoke(target.name);
                 ///STUFF
 
                 //Tutorial
