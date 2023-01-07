@@ -25,10 +25,15 @@ public class ObjectPicking : MonoBehaviour
     public float blinkDistance;
 
     public static event Action<bool, string> layerChanger; //STUFF
+    public static event Action<int> crosshairUpdater; //Cursor
 
     //For TUTORIAL
     public bool isFirstTime = true;
     public static event Action<int> pickedCube;
+    public LayerMask everythingExceptBullshitMask;
+
+
+    public bool isPicked;
 
     ///For TUTORIAL
 
@@ -52,9 +57,29 @@ public class ObjectPicking : MonoBehaviour
             dPercentage--;
         }
 
-        dPercentage = Mathf.Clamp(dPercentage,2,18);
+        dPercentage = Mathf.Clamp(dPercentage,2,18);        
     }
- 
+
+    private void FixedUpdate() {
+        if (isPicked) return;
+        RaycastHit hitler;
+        if (Physics.Raycast(transform.position, transform.forward, out hitler, Mathf.Infinity, everythingExceptBullshitMask)) { 
+            if (hitler.collider.CompareTag("Pickable")) {
+                //Invokeshit
+                crosshairUpdater?.Invoke(1);
+
+            } else
+            {
+               Invoke("CrosshairUpdate", 0.02f);
+            }
+        }
+    }
+
+    private void CrosshairUpdate()
+    {
+        crosshairUpdater?.Invoke(0);
+    }
+
     void HandleInput()
     {
         // Check for left mouse click
@@ -77,6 +102,8 @@ public class ObjectPicking : MonoBehaviour
  
                     //STUFF
                     layerChanger?.Invoke(true, target.name);
+                    crosshairUpdater?.Invoke(2);
+                    isPicked = true;
                     ///STUFF
                     
                     // Disable physics for the object
@@ -101,6 +128,7 @@ public class ObjectPicking : MonoBehaviour
                 StopAllCoroutines();
                 //STUFF
                 layerChanger?.Invoke(false, target.name);
+                crosshairUpdater?.Invoke(0);
                 ///STUFF
 
                 //Tutorial
@@ -115,6 +143,8 @@ public class ObjectPicking : MonoBehaviour
  
                 // Set our target variable to null
                 target = null;
+                isPicked = false;
+
             }
         }
     }

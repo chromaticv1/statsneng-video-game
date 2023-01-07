@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class SendToast : MonoBehaviour
 {
-   public GameObject canvas;
+   public GameObject tutPanel;
    public TMPro.TMP_Text text;
    public bool isToastTime;
 
@@ -10,11 +10,12 @@ public class SendToast : MonoBehaviour
     AnotherDialogue.toastPing += PushToast;
     ObjectPicking.pickedCube += PushToast;
     EnemyLevelOneDeath.deathPing += PushToast;
+    print("Toast Sender " + transform.name);
    }
 
    void PushToast(int tCount_) {
-    if (!canvas) return;
-    canvas.SetActive(true);
+    if (!tutPanel) return;
+    tutPanel.SetActive(true);
     UpdateCanvas(tCount_);
    }
 
@@ -25,7 +26,7 @@ public class SendToast : MonoBehaviour
         text.text = "Pick it up again and\ndrop it on top of the Robot.";
     } else if (i_ == 3) {
         text.text = "To fix what Dr. Jyoti has done,\nlook around and go to the\nsource of the buffer overflow!";
-        Destroy(canvas, 5f);
+        Destroy(tutPanel, 5f);
     }
    }
 }

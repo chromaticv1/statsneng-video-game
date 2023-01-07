@@ -11,17 +11,25 @@ public class MovingPlatform : MonoBehaviour
     public string direction;
     float time;
     float distance;
+    Rigidbody rb;
 
     private void Start() {
+        rb = GetComponent<Rigidbody>();
         switch (direction) {
             case "up":
                 distance = transform.position.y;
+                rb.constraints = RigidbodyConstraints.FreezePositionX;
+                rb.constraints = RigidbodyConstraints.FreezePositionZ;
                 break;
             case "fwd":
                 distance = transform.position.z;
+                rb.constraints = RigidbodyConstraints.FreezePositionX;
+                rb.constraints = RigidbodyConstraints.FreezePositionY;
                 break;
             case "left":
                 distance = transform.position.x;
+                rb.constraints = RigidbodyConstraints.FreezePositionY;
+                rb.constraints = RigidbodyConstraints.FreezePositionZ;
                 break;
             default:
             return;

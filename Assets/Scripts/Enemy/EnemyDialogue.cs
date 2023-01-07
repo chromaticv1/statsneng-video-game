@@ -7,6 +7,8 @@ public class EnemyDialogue : MonoBehaviour
 {
     public GameObject dialogueUI;
     public BoxCollider bCollider;
+    public Canvas canvas;
+    public GameObject dUI;
     bool hasTalked = false;
 
     public static event Action<bool> dialogueTrigger; 
@@ -17,8 +19,9 @@ public class EnemyDialogue : MonoBehaviour
             print("yes?");
             Destroy(bCollider);
         }
-        GameObject i = (GameObject)Instantiate(dialogueUI, transform.position, Quaternion.identity);
-        i.GetComponent<AnotherDialogue>().eDialogue = this;
+        //GameObject i = (GameObject)Instantiate(dialogueUI, transform.position, Quaternion.identity);
+        dUI.SetActive(true);
+        dUI.GetComponent<AnotherDialogue>().eDialogue = this;
         DToggler(true);
         hasTalked = true;
     }
