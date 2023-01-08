@@ -22,3 +22,9 @@ Requires Unity Game Engine version `2021.3.16f1`
 3. DO NOT PRESS RESTART LEVEL IT ALSO STARTS ANOTHER INSTANCE OF MUSIC AND ALSO KINDA BREAKS PHYSICS WE DON'T KNOOOOOW JUST DONT
 
 __Special note: The last "Island level" is a sandbox to test and play around with the mechanic, totally not because we ran out of time! And if you believe enough, it feels fun!__
+
+# Credits:
+
+Music: Nojisuma </br>
+3D Props: Kenney </br>
+... (More will be mentioned afterwards, too sleepy now)
