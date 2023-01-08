@@ -7,9 +7,9 @@ Primary Mechanic:
 Forced Perspective: Forced perspective is a technique that employs optical illusion to make an object appear farther away, closer, larger or smaller than it actually is. It manipulates human visual perception through the use of scaled objects and the correlation between them and the vantage point of the spectator or camera. We used formulas and rules to make it so that you can change the size of an object by picking it up from one perspective and putting it in another place.
  
 **#How to run:**
-1. Head over to the release section.
+1. Head over to the [release section](https://github.com/chromaticv1/statsneng-video-game/releases/tag/amogoos).
 2. Download the zip file.
-3. Run the executable(`.exe`) file.
+3. Run the `statsneng video game.exe` file.
 
 
 #Runs only on Windows devices.
