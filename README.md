@@ -6,7 +6,7 @@ Premise: Dr. Ku is a scientist in a virtual reality uhh engineering uhh somethin
 Primary Mechanic:
 Forced Perspective: Forced perspective is a technique that employs optical illusion to make an object appear farther away, closer, larger or smaller than it actually is. It manipulates human visual perception through the use of scaled objects and the correlation between them and the vantage point of the spectator or camera. We used formulas and rules to make it so that you can change the size of an object by picking it up from one perspective and putting it in another place.
  
-How to run:
+**How to run:**
 1. Head over to the release section.
 2. Download the zip file.
 3. Run the executable(`.exe`) file.
